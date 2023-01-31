@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux' }
+    agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
@@ -7,7 +7,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('arshaqsidhiqe-dockerhub')
     }
     stages {
-        stage('Build') {
+        stage('Build docker image') {
             steps {
                 sh 'docker build -t arshaqsidhiqe/java-app:latest .'
             }   
