@@ -1,4 +1,4 @@
-#Dockerfile for WebAppCalc
+#Dockerfile
 
 
 #BASE IMAGE
