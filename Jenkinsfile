@@ -12,6 +12,16 @@ pipeline {
                 sh 'docker build -t arshaqsidhiqe/java-app:latest .'
             }   
         }
+        stage('Remove existing container') {
+            steps {
+                sh 'docker container rm -f app'
+            }
+        }
+        stage('Run container') {
+            steps {
+                sh 'docker container run -dt --name app -P arshaqsidhiqe/java-app:latest'
+            }
+        }
         stage('login') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
