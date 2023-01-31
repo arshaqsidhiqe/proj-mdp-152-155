@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Run container') {
             steps {
-                sh 'docker container run -dt --name app P arshaqsidhiqe/java-app:latest'
+                sh 'docker container run -dt --name app -p 900:80 arshaqsidhiqe/java-app'
             }
         }
         stage('login') {
