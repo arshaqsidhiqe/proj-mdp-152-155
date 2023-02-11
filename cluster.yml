@@ -2,8 +2,7 @@
 - name: Setup Kubernetes Cluster
   hosts: localhost
   become: yes   
-  update_cache: yes
-  ignore_errors: yes
+
 
   tasks:   
   
@@ -37,6 +36,8 @@
         dest: /home/centos/proj-mdp-152-155
 
     - name: Install the AWS CLI
+      update_cache: yes
+      ignore_errors: yes
       shell: |
         sudo ./aws/install
       args:
