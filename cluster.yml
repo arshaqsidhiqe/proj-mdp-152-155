@@ -37,6 +37,9 @@
     - name: Install the AWS CLI
       shell: |
         sudo ./aws/install
+      update_cache: yes
+      ignore_errors: yes
+
       args:
         executable: /bin/bash
 
