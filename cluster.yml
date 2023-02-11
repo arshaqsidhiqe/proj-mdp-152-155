@@ -45,31 +45,6 @@
 
 
 
-        
-
-    - name: Install the AWS CLI
-      shell: |
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install
-      register: awscli_install
-
-    - name: Check if pip is already installed
-      shell: |
-        pip --version
-      register: pip_check
-      ignore_errors: yes
-
-    - name: Install pip if not already installed
-      shell: |
-        sudo apt-get install python3-pip -y
-      when: pip_check.rc != 0
-
-
-
-
-
-
 
 
 
