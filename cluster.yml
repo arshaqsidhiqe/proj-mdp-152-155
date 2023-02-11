@@ -30,7 +30,6 @@
         wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
 
     - name: Unzip the AWS CLI installer
-      warn: false
       shell: |
         unzip awscli-exe-linux-x86_64.zip
 
