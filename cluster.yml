@@ -30,8 +30,8 @@
         wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
 
     - name: Unzip the AWS CLI installer
-      shell: |
-        unzip awscli-exe-linux-x86_64.zip
+      unarchive:
+        path: /home/centos/proj-mdp-152-155
 
     - name: Install the AWS CLI
       shell: |
