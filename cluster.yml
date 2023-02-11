@@ -1,0 +1,62 @@
+---
+- name: Setup Kubernetes Cluster
+  hosts: all
+  become: yes
+
+  tasks:   
+  
+    - name: Install python3-pip
+      package:
+        name: python3-pip
+        state: latest
+
+    - name: Install AWS CLI
+      pip:
+        name: awscli
+        state: latest
+
+    - name: Install kops
+      command: |
+        curl -LO https://github.com/kubernetes/kops/releases/download/{{ kops_version }}/kops-linux-amd64
+        chmod +x kops-linux-amd64
+        sudo mv kops-linux-amd64 /usr/local/bin/kops
+
+    - name: Install kubectl
+      command: |
+        curl -LO https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/kubectl
+
+    - name: Generate SSH key pair
+      become: yes
+      shell: ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+      register: ssh_key_pair
+
+    - name: Create the S3 bucket
+      aws_s3:
+        bucket: "{{ k8s }}"
+        state: present
+      environment:
+        AWS_ACCESS_KEY_ID: "{{  }}"
+        AWS_SECRET_ACCESS_KEY: "{{  }}"
+      register: s3_bucket
+      
+    - name: Create the cluster
+      shell: kops create cluster --name {{ k8s }} --state {{ s3://k8s }} --zones {{ us-east-1e }} --node-count {{ 2 }} 
+      environment:
+        KOPS_STATE_STORE: "{{ s3://k8s }}"
+      register: cluster_creation
+
+    - name: Create the service object
+      k8s:
+        api_version: v1
+        kind: Service
+        metadata:
+            name: {{ httpd }}
+        spec:
+          type: {{ LoadBalancer }}
+          ports: 
+          - port: 80
+          selector: 
+            app: httpd
+      register: service_creation
