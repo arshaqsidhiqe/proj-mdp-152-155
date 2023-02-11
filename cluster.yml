@@ -2,6 +2,7 @@
 - name: Setup Kubernetes Cluster
   hosts: localhost
   become: yes
+  warn: false
 
   tasks:   
   
