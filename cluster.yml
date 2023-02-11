@@ -34,17 +34,17 @@
 
     - name: Create the S3 bucket
       aws_s3:
-        bucket: "{{ k8s }}"
+        bucket: k8s
         state: present
       environment:
-        AWS_ACCESS_KEY_ID: "{{  }}"
-        AWS_SECRET_ACCESS_KEY: "{{  }}"
+        AWS_ACCESS_KEY_ID: " "
+        AWS_SECRET_ACCESS_KEY: " "
       register: s3_bucket
       
     - name: Create the cluster
-      shell: kops create cluster --name {{ k8s }} --state {{ s3://k8s }} --zones {{ us-east-1e }} --node-count {{ 2 }} 
+      shell: kops create cluster --name=k8s --state=s3://k8s --zones=us-east-1e --node-count=2 
       environment:
-        KOPS_STATE_STORE: "{{ s3://k8s }}"
+        KOPS_STATE_STORE: s3://k8s
       register: cluster_creation
 
     - name: Create the service object
@@ -52,9 +52,9 @@
         api_version: v1
         kind: Service
         metadata:
-            name: {{ httpd }}
+            name: httpd
         spec:
-          type: {{ LoadBalancer }}
+          type: LoadBalancer
           ports: 
           - port: 80
           selector: 
