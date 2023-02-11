@@ -12,6 +12,39 @@
 
 
 
+
+
+    
+
+
+    - name: Install dependencies for AWS CLI
+      yum:
+        name:
+        - unzip
+        - wget
+        - python3
+        state: present
+
+    - name: Download the AWS CLI installer
+      shell: |
+        wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+
+    - name: Unzip the AWS CLI installer
+      shell: |
+        unzip awscli-exe-linux-x86_64.zip
+
+    - name: Install the AWS CLI
+      shell: |
+        sudo ./aws/install
+      args:
+        executable: /bin/bash
+
+
+
+
+
+
+
         
 
     - name: Install the AWS CLI
@@ -31,6 +64,9 @@
       shell: |
         sudo apt-get install python3-pip -y
       when: pip_check.rc != 0
+
+
+
 
 
 
