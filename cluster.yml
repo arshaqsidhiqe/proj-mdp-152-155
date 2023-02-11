@@ -1,6 +1,6 @@
 ---
 - name: Setup Kubernetes Cluster
-  hosts: all
+  hosts: localhost
   become: yes
 
   tasks:   
