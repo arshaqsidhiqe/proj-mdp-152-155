@@ -1,7 +1,9 @@
 ---
 - name: Setup Kubernetes Cluster
   hosts: localhost
-  become: yes
+  become: yes   
+  update_cache: yes
+  ignore_errors: yes
 
   tasks:   
   
@@ -37,9 +39,6 @@
     - name: Install the AWS CLI
       shell: |
         sudo ./aws/install
-      update_cache: yes
-      ignore_errors: yes
-
       args:
         executable: /bin/bash
 
