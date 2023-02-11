@@ -2,7 +2,7 @@
 - name: Setup Kubernetes Cluster
   hosts: localhost
   become: yes   
-  update_cache: yes
+
 
 
   tasks:   
